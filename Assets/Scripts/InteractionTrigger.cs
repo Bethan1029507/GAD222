@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class InteractionTrigger : MonoBehaviour
 {
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
     public string dialogueLine = "This is a test interaction.";
+
+    public Button option1Button;
+    public Button option2Button;
+    
     private bool playerInRange;
         
     // Update is called once per frame
@@ -17,6 +22,10 @@ public class InteractionTrigger : MonoBehaviour
         {
             dialogueBox.SetActive(true);
             dialogueText.text = dialogueLine;
+
+            //disable choice buttons
+            if (option1Button != null) option1Button.gameObject.SetActive(false);
+            if (option2Button != null) option2Button.gameObject.SetActive(false);
         }
 
         // Close dialogue with Escape
