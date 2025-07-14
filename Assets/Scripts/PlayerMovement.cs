@@ -6,16 +6,27 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D playerRb;
     public float speed;
-    public float input;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
-    // Update is called once per frame
+    private float inputX;
+
     void Update()
     {
-        input = Input.GetAxisRaw("Horizontal");
+        inputX = Input.GetAxisRaw("Horizontal");
+
+        //walk animation toggle        
+        animator.SetBool("isWalking", inputX != 0);
+
+        //flip the sprite
+        if (inputX > 0)
+            spriteRenderer.flipX = false;
+        else if (inputX < 0)
+            spriteRenderer.flipX = true;
     }
 
     void FixedUpdate()
     {
-        playerRb.velocity = new Vector2 (input * speed, playerRb.velocity.y);
+        playerRb.velocity = new Vector2 (inputX * speed, 0f);
     }
 }
