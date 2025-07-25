@@ -19,7 +19,11 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping;
     private bool cancelTyping;
 
+    private System.Action yesAction;
+
     public static DialogueManager Instance;
+
+    public System.Action OnDialogueComplete;
 
     private void Awake()
     {
@@ -50,6 +54,10 @@ public class DialogueManager : MonoBehaviour
                     {
                         StartTyping(currentLines[currentLineIndex]);
                     }
+                    else
+                    {
+                        OnDialogueComplete?.Invoke();
+                    }
                 }
             }
 
@@ -67,8 +75,17 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive (true);
         dialogueText.text = "";
 
-        if (option1Button != null) option1Button.gameObject.SetActive(false);
-        if (option2Button != null) option2Button.gameObject.SetActive(false);
+        if (option1Button != null)
+        {
+            option1Button.onClick.RemoveAllListeners();
+            option1Button.gameObject.SetActive(false); //Ensure reset
+        }
+
+        if (option2Button != null)
+        {
+            option2Button.onClick.RemoveAllListeners();
+            option2Button.gameObject.SetActive(false); //Ensure reset
+        }
 
         StartTyping(currentLines[currentLineIndex]);
     }
@@ -107,10 +124,55 @@ public class DialogueManager : MonoBehaviour
         typingCoroutine = null;
 
         dialogueText.text = "";
-        dialogueBox.SetActive (false);
+        dialogueBox.SetActive(false);
         currentLines = null;
         currentLineIndex = 0;
         isTyping = false;
         cancelTyping = false;
+
+        if (option1Button != null)
+        {
+            option1Button.onClick.RemoveAllListeners();
+            option1Button.gameObject.SetActive(false);
+        }
+
+        if (option2Button != null)
+        {
+            option2Button.onClick.RemoveAllListeners();
+            option2Button.gameObject.SetActive(false);
+        }
+    }
+
+    public void StartSceneTransitionPrompt(string prompt, string yesLabel, string noLabel, System.Action onYes)
+    {
+        CloseDialogue();
+
+        dialogueBox.SetActive(true);
+        dialogueText.text = prompt;
+
+        yesAction = onYes;
+
+        if (option1Button != null && option2Button != null)
+        {
+            option1Button.onClick.RemoveAllListeners();
+            option2Button.onClick.RemoveAllListeners();
+
+            option1Button.GetComponentInChildren<TextMeshProUGUI>().text = yesLabel;
+            option2Button.GetComponentInChildren<TextMeshProUGUI>().text = noLabel;
+
+            option1Button.gameObject.SetActive(true);
+            option2Button.gameObject.SetActive(true);
+
+            option1Button.onClick.AddListener(() =>
+            {
+                yesAction?.Invoke();
+                CloseDialogue();
+            });
+
+            option2Button.onClick.AddListener(() =>
+            {
+                CloseDialogue();
+            });
+        }
     }
 }

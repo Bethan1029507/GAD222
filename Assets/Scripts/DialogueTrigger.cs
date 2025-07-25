@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
+    public GameObject promptUI;
+    
     public string[] dialogueLines;
 
     private bool playerInRange;
@@ -21,6 +23,9 @@ public class DialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+
+            if (promptUI != null)
+                promptUI.SetActive(true);
         }
     }
 
@@ -29,6 +34,10 @@ public class DialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            
+            if (promptUI != null)
+                promptUI.SetActive(false);
+
             DialogueManager.Instance.CloseDialogue();
         }
     }
