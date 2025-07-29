@@ -18,6 +18,7 @@ public class CoreEndingManager : MonoBehaviour
     {
         string ending = PlayerPrefs.GetString("FinalEnding", "Submission");
 
+        DialogueManager.Instance.allowExit = false;
         DialogueManager.Instance.OnDialogueComplete = ShowEndingScreen;
 
         switch (ending)
@@ -35,6 +36,8 @@ public class CoreEndingManager : MonoBehaviour
     }
     void ShowEndingScreen()
     {
+        DialogueManager.Instance.allowExit = true;
+
         endingScreen.SetActive(true);
  
         string ending = PlayerPrefs.GetString("FinalEnding", "Submission");
@@ -43,7 +46,7 @@ public class CoreEndingManager : MonoBehaviour
         playAgainButton.onClick.RemoveAllListeners();
         playAgainButton.onClick.AddListener(() =>
         {
-            // Optional: Reset GameStateManager
+            //Reset GameStateManager
             GameStateManager.Instance.oblivionChoices = 0;
             GameStateManager.Instance.submissionChoices = 0;
             GameStateManager.Instance.rebirthChoices = 0;

@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-
     public GameObject dialogueBox;
+    public GameObject continueIndicator;
     public TextMeshProUGUI dialogueText;
     public Button option1Button;
     public Button option2Button;
     public float typingSpeed = 0.05f;
+    public bool allowExit = true;
 
     private string[] currentLines;
     private int currentLineIndex;
@@ -34,6 +35,9 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialogueBox.SetActive(false);
+
+        if (continueIndicator != null)
+            continueIndicator.SetActive(false);
     }
 
     
@@ -56,12 +60,14 @@ public class DialogueManager : MonoBehaviour
                     }
                     else
                     {
+                        continueIndicator.SetActive(false);
+                        CloseDialogue();
                         OnDialogueComplete?.Invoke();
                     }
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (allowExit && Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseDialogue();
             }
@@ -74,6 +80,8 @@ public class DialogueManager : MonoBehaviour
         currentLineIndex = 0;
         dialogueBox.SetActive (true);
         dialogueText.text = "";
+
+        if (continueIndicator != null) continueIndicator.SetActive(false);
 
         if (option1Button != null)
         {
@@ -93,6 +101,10 @@ public class DialogueManager : MonoBehaviour
     private void StartTyping(string line)
     {
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+
+        if (continueIndicator != null)
+            continueIndicator.SetActive(true);
+
         typingCoroutine = StartCoroutine(TypeLine(line));
     }
 
@@ -116,6 +128,12 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
         cancelTyping = false;
+
+        //show indicator only if there's more lines or text not finished typing
+        if (continueIndicator != null && currentLineIndex < currentLines.Length - 1) 
+        {
+            continueIndicator.SetActive(true);
+        }
     }
 
     public void CloseDialogue()
@@ -125,6 +143,11 @@ public class DialogueManager : MonoBehaviour
 
         dialogueText.text = "";
         dialogueBox.SetActive(false);
+
+        if (continueIndicator != null)
+            continueIndicator.SetActive(false);
+
+
         currentLines = null;
         currentLineIndex = 0;
         isTyping = false;

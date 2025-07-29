@@ -1911,6 +1911,10 @@ PrefabInstance:
       propertyPath: option2Button
       value: 
       objectReference: {fileID: 375084625498787433}
+    - target: {fileID: 7356375627513102742, guid: 680fbf84fb758d346bfc52723df4e1c8, type: 3}
+      propertyPath: continueIndicator
+      value: 
+      objectReference: {fileID: 3078936446798078752}
     - target: {fileID: 7878992008441996810, guid: 680fbf84fb758d346bfc52723df4e1c8, type: 3}
       propertyPath: m_Name
       value: DialogueManager
@@ -3253,6 +3257,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d17bbe5f64ad23740a308be3d33f6c9a, type: 3}
+--- !u!1 &3078936446798078752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2818878414385479839, guid: d17bbe5f64ad23740a308be3d33f6c9a, type: 3}
+  m_PrefabInstance: {fileID: 3078936446798078751}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3127457648417950261
 GameObject:
   m_ObjectHideFlags: 0
@@ -3668,7 +3677,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 9.429974, y: -0.37037277}
+  m_Offset: {x: 9.410564, y: -0.37915325}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3679,7 +3688,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50.033836, y: 9.894453}
+  m_Size: {x: 50.072655, y: 9.98468}
   m_EdgeRadius: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

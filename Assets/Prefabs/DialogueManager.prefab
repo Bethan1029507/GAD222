@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueBox: {fileID: 0}
+  continueIndicator: {fileID: 0}
   dialogueText: {fileID: 0}
   option1Button: {fileID: 0}
   option2Button: {fileID: 0}
   typingSpeed: 0.05
+  allowExit: 1
