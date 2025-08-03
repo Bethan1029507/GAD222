@@ -16,6 +16,8 @@ public class CoreEndingManager : MonoBehaviour
 
     void Start()
     {
+        Debug.LogError("test 1");
+
         string ending = PlayerPrefs.GetString("FinalEnding", "Submission");
 
         DialogueManager.Instance.allowExit = false;
@@ -33,7 +35,10 @@ public class CoreEndingManager : MonoBehaviour
                 DialogueManager.Instance.StartDialogue(rebirthDialogue);
                 break;
         }
+        Debug.LogError("test 2");
+
     }
+
     void ShowEndingScreen()
     {
         DialogueManager.Instance.allowExit = true;
